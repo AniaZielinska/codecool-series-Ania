@@ -27,18 +27,30 @@
                 {% endfor %}
             </tbody>
         </table>
+
         {% if current_page>1 %}
             <a href="{{ url_for('shows_most_rated', page_num=current_page-1) }}">&laquo;</a>
         {% else %}
             &laquo;
         {% endif %}
-        {% for number in range(1, num+1) %}
-            <a href="{{ url_for('shows_most_rated', page_num=number) }}">{{ number }}</a>
+
+        {% for number in range(from_num, to_num + 1) %}
+
+
+
+            {% if number!=current_page %}
+                <a href="{{ url_for('shows_most_rated', page_num=number) }}">{{ number }}</a>
+            {% else %}
+                ({{ number }})
+            {% endif %}
+
         {% endfor %}
+
         {% if current_page!=num %}
             <a href="{{ url_for('shows_most_rated', page_num=current_page+1) }}">&raquo;</a>
         {% else %}
             &raquo;
         {% endif %}
+
     </div>
 {% endblock %}
