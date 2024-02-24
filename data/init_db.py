@@ -5,7 +5,7 @@ def init_db():
     # We need to connect to postgres db to be able to drop our db
     connection_data = get_connection_data('postgres')
     db_to_init = ensure_var('MY_PSQL_DBNAME')
-    print(f'Running init with connection data: {connection_data} and initializing databae: {db_to_init}')
+    print(f'Running init with connection data: {connection_data} and initializing database: {db_to_init}')
 
     # Using `try` instead of `with`, because with psycopg 2.9, the connection starts a transaction if it's
     # put into a `with` block, but that would produce the following error:

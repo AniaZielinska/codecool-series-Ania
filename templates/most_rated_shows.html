@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="card">
+        This is an example for a table:
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release year</th>
+                <th>Average Runtime Length</th>
+                <th>Rating</th>
+                <th>Genres</th>
+                <th>Trailer</th>
+{#                <th class="action-column">e</th>#}
+            </tr>
+            </thead>
+            <tbody>
+                {% for show in shows %}
+                    <tr>
+                        <td>{{ show['title'] }}</td>
+                        <td>{{ show['year'] }}</td>
+                        <td>{{ show['runtime'] }}</td>
+                        <td>{{ show['rating'] }}</td>
+                        <td>{{ show['genres'] }}</td>
+                        <td>{{ show['trailer'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if current_page>1 %}
+            <a href="{{ url_for('shows_most_rated', page_num=current_page-1) }}">&laquo;</a>
+        {% else %}
+            &laquo;
+        {% endif %}
+        {% for number in range(1, num+1) %}
+            <a href="{{ url_for('shows_most_rated', page_num=number) }}">{{ number }}</a>
+        {% endfor %}
+        {% if current_page!=num %}
+            <a href="{{ url_for('shows_most_rated', page_num=current_page+1) }}">&raquo;</a>
+        {% else %}
+            &raquo;
+        {% endif %}
+    </div>
+{% endblock %}
