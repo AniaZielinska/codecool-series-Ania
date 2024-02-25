@@ -39,6 +39,37 @@ def get_most_rated_shows(page_num=1, sort_column='rating', sort_direction='DESC'
     return data_manager.execute_select(query, params)
 
 
+def get_show_details(show_id):
+    query = """
+        SELECT actors.name AS actors FROM shows
+        LEFT JOIN show_characters ON show_characters.show_id = shows.id
+        LEFT JOIN actors ON actors.id = show_characters.actor_id
+        WHERE shows.id = %(show_id)s
+        LIMIT 3
+    """
+    actors = data_manager.execute_select(query, {'show_id': show_id})
+
+    query = """
+        SELECT title,
+               runtime,
+               ROUND(rating, 2) AS rating,
+               STRING_AGG(genres.name, ', ') AS genres,
+               overview
+        FROM shows
+        LEFT JOIN show_genres ON shows.id = show_genres.show_id
+        LEFT JOIN genres ON genres.id = show_genres.genre_id
+        WHERE shows.id = %(show_id)s
+        GROUP BY shows.id
+    """
+    show_details = data_manager.execute_select(query, {'show_id': show_id}, fetchall=False)
+
+    show_actors = []
+    for actor in actors:
+        show_actors.append(actor['actors'])
+    show_details['actors'] = actors
+    return show_details
+
+
 def get_pages_num():
     return data_manager.execute_select("""
         SELECT count(*)/15 AS num FROM shows

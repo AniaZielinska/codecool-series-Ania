@@ -35,7 +35,7 @@ def shows_most_rated(page_num=1):
         to_num = 5
 
     return render_template('most_rated_shows.html',
-                           page_title="Most rated shows",
+                           page_title="Shows",
                            shows=shows,
                            num=num,
                            current_page=page_num,
@@ -43,6 +43,14 @@ def shows_most_rated(page_num=1):
                            to_num=to_num,
                            sort_by=sort_by,
                            order=order)
+
+
+@app.route('/show/<int:show_id>')
+def get_show_details(show_id):
+    show_details = queries.get_show_details(show_id)
+    return render_template('show_details.html',
+                           page_title=show_details['title'],
+                           show_details=show_details)
 
 
 def main():
