@@ -1,4 +1,5 @@
 from data import data_manager
+from math import trunc
 
 
 def get_shows():
@@ -54,7 +55,8 @@ def get_show_details(show_id):
                runtime,
                ROUND(rating, 2) AS rating,
                STRING_AGG(genres.name, ', ') AS genres,
-               overview
+               overview,
+               trailer
         FROM shows
         LEFT JOIN show_genres ON shows.id = show_genres.show_id
         LEFT JOIN genres ON genres.id = show_genres.genre_id
@@ -63,10 +65,21 @@ def get_show_details(show_id):
     """
     show_details = data_manager.execute_select(query, {'show_id': show_id}, fetchall=False)
 
+    time_h, time_min = '', ''
+    time = show_details['runtime']
+    if time >= 60:
+        time_h = str(trunc(time / 60)) + 'h'
+    if time % 60 != 0:
+        time_min = str(time % 60) + 'min'
+    time = time_h + ' ' + time_min
+    show_details['runtime'] = time
+
     show_actors = []
     for actor in actors:
         show_actors.append(actor['actors'])
-    show_details['actors'] = actors
+    show_actors = ", ".join(show_actors)
+    show_details['actors'] = show_actors
+
     return show_details
 
 

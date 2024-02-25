@@ -50,7 +50,7 @@ def get_show_details(show_id):
     show_details = queries.get_show_details(show_id)
     return render_template('show_details.html',
                            page_title=show_details['title'],
-                           show_details=show_details)
+                           show=show_details)
 
 
 def main():
