@@ -5,10 +5,21 @@
         <table>
             <thead>
             <tr>
-                <th>Title</th>
-                <th>Release year</th>
-                <th>Average Runtime Length</th>
-                <th>Rating</th>
+                <th>Title
+                    <a href="{{ url_for('shows_most_rated', sort_by="title", page_num=current_page, order="ASC") }}">⇩</a>
+                    <a href="{{ url_for('shows_most_rated', sort_by="title", page_num=current_page, order="DESC") }}">⇧</a>
+                </th>
+                <th>Release year
+                    <a href="{{ url_for('shows_most_rated', sort_by="year", page_num=current_page, order="ASC") }}">⇩</a>
+                    <a href="{{ url_for('shows_most_rated', sort_by="year", page_num=current_page, order="DESC") }}">⇧</a>
+                </th>
+                <th>Average Runtime Length
+                    <a href="{{ url_for('shows_most_rated', sort_by="runtime", page_num=current_page, order="ASC") }}">⇩</a>
+                    <a href="{{ url_for('shows_most_rated', sort_by="runtime", page_num=current_page, order="DESC") }}">⇧</a>
+                <th>Rating
+                    <a href="{{ url_for('shows_most_rated', sort_by="rating", page_num=current_page, order="ASC") }}">⇩</a>
+                    <a href="{{ url_for('shows_most_rated', sort_by="rating", page_num=current_page, order="DESC") }}">⇧</a>
+                </th>
                 <th>Genres</th>
                 <th>Trailer</th>
 {#                <th class="action-column">e</th>#}
@@ -29,17 +40,15 @@
         </table>
 
         {% if current_page>1 %}
-            <a href="{{ url_for('shows_most_rated', page_num=current_page-1) }}">&laquo;</a>
+            <a href="{{ url_for('shows_most_rated', page_num=current_page-1, sort_by=sort_by, order=order) }}">&laquo;</a>
         {% else %}
             &laquo;
         {% endif %}
 
         {% for number in range(from_num, to_num + 1) %}
 
-
-
             {% if number!=current_page %}
-                <a href="{{ url_for('shows_most_rated', page_num=number) }}">{{ number }}</a>
+                <a href="{{ url_for('shows_most_rated', page_num=number, sort_by=sort_by, order=order) }}">{{ number }}</a>
             {% else %}
                 ({{ number }})
             {% endif %}
@@ -47,7 +56,7 @@
         {% endfor %}
 
         {% if current_page!=num %}
-            <a href="{{ url_for('shows_most_rated', page_num=current_page+1) }}">&raquo;</a>
+            <a href="{{ url_for('shows_most_rated', page_num=current_page + 1, sort_by=sort_by, order=order) }}">&raquo;</a>
         {% else %}
             &raquo;
         {% endif %}
