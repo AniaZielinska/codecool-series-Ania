@@ -48,6 +48,8 @@ def shows_most_rated(page_num=1):
 @app.route('/show/<int:show_id>')
 def get_show_details(show_id):
     show_details = queries.get_show_details(show_id)
+    show_details['trailer_id'] = \
+        show_details['trailer'][show_details['trailer'].find('=') + 1:] if show_details['trailer'] else ''
     return render_template('show_details.html',
                            page_title=show_details['title'],
                            show=show_details)

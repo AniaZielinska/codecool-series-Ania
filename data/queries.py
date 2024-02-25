@@ -16,7 +16,8 @@ def get_most_rated_shows(page_num=1, sort_column='rating', sort_direction='DESC'
         sort_direction = 'DESC'
 
     query = """
-            SELECT title, 
+            SELECT shows.id,
+                   title, 
                    TO_CHAR(year, 'YYYY') AS year, 
                    runtime,
                    ROUND(rating, 2) AS rating, 
@@ -46,6 +47,7 @@ def get_show_details(show_id):
         LEFT JOIN show_characters ON show_characters.show_id = shows.id
         LEFT JOIN actors ON actors.id = show_characters.actor_id
         WHERE shows.id = %(show_id)s
+        ORDER BY actors.id
         LIMIT 3
     """
     actors = data_manager.execute_select(query, {'show_id': show_id})

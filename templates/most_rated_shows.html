@@ -27,7 +27,7 @@
             <tbody>
                 {% for show in shows %}
                     <tr>
-                        <td>{{ show['title'] }}</td>
+                        <td><a href="{{ '/show/' + (show['id'] | string) }}">{{ show['title'] }}</a></td>
                         <td>{{ show['year'] }}</td>
                         <td>{{ show['runtime'] }}</td>
                         <td>{{ show['rating'] }}</td>

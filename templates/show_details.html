@@ -11,11 +11,15 @@
                 <p><b>Description:</b> {{ show['overview'] }}</p>
             </div>
             {% if show['trailer'] %}
-                <iframe width="420" height="315" src="{{ show['trailer'] }}" class="poster col col-third"></iframe>
+                <div id="player" class="trailer col col-third"></div>
             {% endif %}
         </div>
         <div>
 
         </div>
     </div>
+    <script type="text/javascript">
+        let videoId = '{{ show['trailer_id'] }}';
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/embed-youtube.js') }}"></script>
 {% endblock %}
